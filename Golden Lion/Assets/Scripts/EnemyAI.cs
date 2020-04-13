@@ -7,10 +7,14 @@ public class EnemyAI : MonoBehaviour
 {
 
     [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
+    [SerializeField] private Transform m_TopLadderCheck;
+    [SerializeField] private LayerMask m_LadderLayer;
+    public Vector2 topLadderCheckSize;
     private Vector3 m_Velocity = Vector3.zero;
     public Transform target;
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
+    public float ladderJump = 2f;
     public float speed = 40f;
     public float ladderSpeed = 40f;
     private float movement = 0f;
@@ -19,16 +23,9 @@ public class EnemyAI : MonoBehaviour
     Vector2 direction;
     private float gravityScale = 1;
 
-
     public float nextWaypointDistance = 3f;
 
     private Vector2 currentWaypointVector;
-
-
-    private bool isStuck = false;
-    private Vector2 lastCheckPosition;
-    private float stuckCheckTimer = 0;
-    private float stuckCheckInterval = 1f;
 
     Path path;
     int currentWaypoint = 0;
@@ -67,21 +64,6 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        stuckCheckTimer += Time.fixedDeltaTime;
-
-        if (stuckCheckTimer >= stuckCheckInterval)
-        {
-            if (lastCheckPosition == (Vector2)transform.position)
-            {
-                Debug.Log("Considering Stuck!");
-                isStuck = true;
-            } else
-            {
-                lastCheckPosition = transform.position;
-            }
-            stuckCheckTimer = 0;
-        }
-
         if (path == null) return;
 
         if (currentWaypoint >= path.vectorPath.Count)
@@ -121,12 +103,10 @@ public class EnemyAI : MonoBehaviour
         {
             yVelocity = ladderMove * 10f / gravityScale;
 
-            if (isStuck)
+            if (yVelocity > 0 && !Physics2D.OverlapBox(m_TopLadderCheck.position, topLadderCheckSize, 0, m_LadderLayer))
             {
-                Debug.Log("Stuck. Removing X Velocity, Doing Powerjump!");
-                xVelocity = 0;
-                yVelocity *= 2;
-                isStuck = false;
+                Debug.Log("Power JUMP!");
+                yVelocity *= ladderJump; // Do A Jump
             }
         }
         // Move the character by finding the target velocity
