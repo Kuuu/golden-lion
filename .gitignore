@@ -3,12 +3,12 @@
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
 Library/
-/Golden Lion/[Tt]emp/
-/Golden Lion/[Oo]bj/
-/Golden Lion/[Bb]uild/
-/Golden Lion/[Bb]uilds/
-/Golden Lion/[Ll]ogs/
-/Golden Lion/[Mm]emoryCaptures/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 /[Aa]ssets/AssetStoreTools*
