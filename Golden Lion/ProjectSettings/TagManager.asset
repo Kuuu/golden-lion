@@ -18,8 +18,8 @@ TagManager:
   - EnemyGround
   - Player
   - Enemy
-  - 
-  - 
+  - Walkable
+  - Coin
   - 
   - 
   - 
