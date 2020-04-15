@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
-
     CharacterController2D character;
 
     public float speed = 40f;
@@ -41,5 +41,13 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         character.Move(movement * speed * Time.fixedDeltaTime, ladderMovement * ladderSpeed * Time.fixedDeltaTime);
+    }
+    
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (LayerMask.LayerToName(col.gameObject.layer) == "Coin") {
+            Destroy(col.gameObject);
+            GameController.Instance.CollectedCoin();
+        }
     }
 }
