@@ -2,18 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using Pathfinding.Serialization;
 
-[CustomGraphEditor(typeof(EnemyGridGraph), "Enemy Grid Graph")]
-public class EnemyGridGraphEditor : GridGraphEditor
-{
-    // Here goes the GUI
-    public void OnInspectorGUI(EnemyGridGraph target)
-    {
-        OnBaseInspectorGUI(target);
-        //TerrainGraph graph = (TerrainGraph)target;
-    }
-}
 
+[JsonOptIn]
 public class EnemyGridGraph : GridGraph
 {
     public override void RecalculateCell(int x, int z, bool resetPenalties = true, bool resetTags = true)
