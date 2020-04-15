@@ -1,27 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
-
-    [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
-    [SerializeField] private Transform m_TopLadderCheck;
-    [SerializeField] private LayerMask m_LadderLayer;
-    public Vector2 topLadderCheckSize;
-    private Vector3 m_Velocity = Vector3.zero;
     public Transform target;
-    private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+    public float movementSmoothing = 0;
+    public Transform topLadderCheck;
+    public Vector2 topLadderCheckSize;
 
     public float ladderJump = 2f;
     public float speed = 40f;
     public float ladderSpeed = 40f;
+
+    private Vector3 refVelocity = Vector3.zero;
+    private bool facingRight = true;
+    private SpriteRenderer spriteRenderer;
+
     private float movement = 0f;
     private float ladderMovement = 0f;
     private bool onLadder = false;
     Vector2 direction;
     private float gravityScale = 1;
+    private int ladderLayer;
 
     public float nextWaypointDistance = 3f;
 
@@ -30,6 +30,7 @@ public class EnemyAI : MonoBehaviour
     Path path;
     int currentWaypoint = 0;
     bool reachedEndOfPath = false;
+    private float pathUpdateRate = 0.5f;
 
     Seeker seeker;
     Rigidbody2D rb;
@@ -39,8 +40,10 @@ public class EnemyAI : MonoBehaviour
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        ladderLayer = LayerMask.NameToLayer("Ladder");
         gravityScale = rb.gravityScale;
-        InvokeRepeating("UpdatePath", 0f, 0.5f);
+        InvokeRepeating("UpdatePath", 0f, pathUpdateRate);
         
     }
 
@@ -93,7 +96,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public void Move(float move, float ladderMove)
+    private void Move(float move, float ladderMove)
     {
 
         float xVelocity = move * 10f;
@@ -102,18 +105,18 @@ public class EnemyAI : MonoBehaviour
         if (onLadder && ladderMove != 0)
         {
             yVelocity = ladderMove * 10f / gravityScale;
-
-            if (yVelocity > 0 && !Physics2D.OverlapBox(m_TopLadderCheck.position, topLadderCheckSize, 0, m_LadderLayer))
+            /*
+            if (yVelocity > 0 && !Physics2D.OverlapBox(topLadderCheck.position, topLadderCheckSize, 0, 1 << ladderLayer))
             {
                 Debug.Log("Power JUMP!");
                 yVelocity *= ladderJump; // Do A Jump
-            }
+            }*/
         }
         // Move the character by finding the target velocity
         Vector2 targetVelocity = new Vector2(xVelocity, yVelocity);
 
         // And then smoothing it out and applying it to the character
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref refVelocity, movementSmoothing);
 
         /*
         if (preMovePosition == (Vector2)transform.position)
@@ -123,38 +126,34 @@ public class EnemyAI : MonoBehaviour
         }*/
 
         // If the input is moving the player right and the player is facing left...
-        if (move > 0 && !m_FacingRight)
+        if (move > 0 && !facingRight)
         {
-            // ... flip the player.
-            Flip();
+            spriteRenderer.flipX = false;
+            facingRight = true;
         }
         // Otherwise if the input is moving the player left and the player is facing right...
-        else if (move < 0 && m_FacingRight)
+        else if (move < 0 && facingRight)
         {
-            // ... flip the player.
-            Flip();
+            spriteRenderer.flipX = true;
+            facingRight = false;
         }
-    }
-
-
-    private void Flip()
-    {
-        // Switch the way the player is labelled as facing.
-        m_FacingRight = !m_FacingRight;
-
-        // Multiply the player's x local scale by -1.
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (LayerMask.LayerToName(col.gameObject.layer) == "Ladder") { rb.gravityScale = 0; onLadder = true; }
+        if (col.gameObject.layer == ladderLayer)
+        {
+            rb.gravityScale = 0;
+            onLadder = true;
+        }
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if (LayerMask.LayerToName(col.gameObject.layer) == "Ladder") { rb.gravityScale = gravityScale; onLadder = false; }
+        if (col.gameObject.layer == ladderLayer)
+        {
+            rb.gravityScale = gravityScale;
+            onLadder = false;
+        }
     }
 }

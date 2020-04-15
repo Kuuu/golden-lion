@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     public static GameController Instance = null;
     private int coinsLeft = 1;
 
+
     private void Awake()
     {
         if (Instance)
