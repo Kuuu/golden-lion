@@ -15,7 +15,7 @@ TagManager:
   - 
   - Ground
   - Ladder
-  - EnemyGround
+  - EnemyWall
   - Player
   - Enemy
   - Walkable
@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Technical
+    uniqueID: 4089226611
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Actors
+    uniqueID: 1637617723
     locked: 0
