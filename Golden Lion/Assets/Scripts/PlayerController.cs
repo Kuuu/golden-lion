@@ -50,4 +50,12 @@ public class PlayerController : MonoBehaviour
             GameController.Instance.CollectedCoin();
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (LayerMask.LayerToName(collision.collider.gameObject.layer) == "Enemy")
+        {
+            GameController.Instance.RestartLevel();
+        }
+    }
 }
