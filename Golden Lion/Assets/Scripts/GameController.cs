@@ -40,6 +40,11 @@ public class GameController : MonoBehaviour
         {
             RestartLevel();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("LevelSelect");
+        }
     }
 
     public void RestartLevel()
@@ -62,7 +67,7 @@ public class GameController : MonoBehaviour
     {
         if (coinsLeft == 0)
         {
-            Debug.Log("WIN!");
+            SceneManager.LoadScene("LevelSelect");
         }
     }
 

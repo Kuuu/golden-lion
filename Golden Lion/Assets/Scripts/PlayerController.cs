@@ -28,11 +28,6 @@ public class PlayerController : MonoBehaviour
 
 
         ladderMovement = Input.GetAxisRaw("Vertical");
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
     }
 
     void FixedUpdate()
