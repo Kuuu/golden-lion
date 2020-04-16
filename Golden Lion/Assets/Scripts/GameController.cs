@@ -45,8 +45,13 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("LevelSelect");
+            ExitToMenu();
         }
+    }
+
+    public void ExitToMenu()
+    {
+        SceneManager.LoadScene("LevelSelect");
     }
 
     public void RestartLevel()

@@ -94,6 +94,9 @@ public class PlayerController : MonoBehaviour
             case "up":
                 upBtn = true;
                 break;
+            case "menu":
+                GameController.Instance.ExitToMenu();
+                break;
             default:
                 break;
         }
@@ -128,6 +131,7 @@ public class PlayerController : MonoBehaviour
         EventTrigger rightButton = GameObject.Find("RightButton").GetComponent<EventTrigger>();
         EventTrigger downButton = GameObject.Find("DownButton").GetComponent<EventTrigger>();
         EventTrigger upButton = GameObject.Find("UpButton").GetComponent<EventTrigger>();
+        EventTrigger menuButton = GameObject.Find("MenuButton").GetComponent<EventTrigger>();
 
         EventTrigger.Entry entry;
 
@@ -186,6 +190,12 @@ public class PlayerController : MonoBehaviour
         entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
         entry.callback.AddListener((eventData) => { ButtonUp("up"); });
         upButton.triggers.Add(entry);
-        
+
+        // MENU
+
+        entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
+        entry.callback.AddListener((eventData) => { ButtonDown("menu"); });
+        menuButton.triggers.Add(entry);
+
     }
 }
