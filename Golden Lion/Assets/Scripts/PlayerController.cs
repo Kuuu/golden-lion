@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         character = GetComponent<CharacterController2D>();
-        SetEventTriggers();
+        if (touchMovement) SetEventTriggers();
+        else DisableOnScreenControls();
     }
 
     void Update()
@@ -123,6 +124,15 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("See Button Event in PlayerController.cs!");
                 break;
         }
+    }
+
+    private void DisableOnScreenControls()
+    {
+        GameObject.Find("LeftButton").SetActive(false);
+        GameObject.Find("RightButton").SetActive(false);
+        GameObject.Find("DownButton").SetActive(false);
+        GameObject.Find("UpButton").SetActive(false);
+        GameObject.Find("MenuButton").SetActive(false);
     }
 
     private void SetEventTriggers()
