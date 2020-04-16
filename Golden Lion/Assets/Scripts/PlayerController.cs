@@ -94,9 +94,6 @@ public class PlayerController : MonoBehaviour
             case "up":
                 upBtn = true;
                 break;
-            case "menu":
-                GameController.Instance.ExitToMenu();
-                break;
             default:
                 break;
         }
@@ -118,6 +115,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case "up":
                 upBtn = false;
+                break;
+            case "menu":
+                GameController.Instance.ExitToMenu();
                 break;
             default:
                 Debug.Log("See Button Event in PlayerController.cs!");
@@ -193,8 +193,8 @@ public class PlayerController : MonoBehaviour
 
         // MENU
 
-        entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
-        entry.callback.AddListener((eventData) => { ButtonDown("menu"); });
+        entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerUp };
+        entry.callback.AddListener((eventData) => { ButtonUp("menu"); });
         menuButton.triggers.Add(entry);
 
     }
