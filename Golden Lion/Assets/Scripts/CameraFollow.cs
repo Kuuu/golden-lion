@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
 
-    public Transform target;
+    private Transform target;
     public float smoothTime = 0.15f;
 
     public float offsetY = -10f;
@@ -16,6 +16,7 @@ public class CameraFollow : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        target = GameObject.Find("Player").GetComponent<Transform>();
         currentOffset = offsetY;
     }
 

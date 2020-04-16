@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1322000494}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LadderCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1812297116}
   - component: {fileID: 1812297118}
   - component: {fileID: 1812297115}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4465520949952285271}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.8052907, y: 2.830246, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1322000494}
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73dc25e70876b69449ebe61fd008dbcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 13
+  speed: 11
   ladderSpeed: 25
   bottom: -5
 --- !u!114 &1812297118
@@ -165,8 +165,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSmoothing: 0
-  topLadderCheck: {fileID: 0}
-  topLadderCheckSize: {x: 0, y: 0}
+  topLadderCheck: {fileID: 1322000494}
+  topLadderCheckSize: {x: 0.35, y: 0.01}
 --- !u!70 &1812297115
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -180,6 +180,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.031864166}
+  m_Offset: {x: 0, y: -0.029}
   m_Size: {x: 0.25899124, y: 0.4397478}
   m_Direction: 0

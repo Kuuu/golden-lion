@@ -4,9 +4,10 @@ using UnityEngine.Tilemaps;
 
 public class GameController : MonoBehaviour
 {
-    public Tilemap coinsTilemap;
+    private Tilemap coinsTilemap;
     public static GameController Instance = null;
     private int coinsLeft = 1;
+    public DeviceType deviceType;
 
 
     private void Awake()
@@ -22,11 +23,14 @@ public class GameController : MonoBehaviour
         {
             Instance = this;
         }
+
+        deviceType = SystemInfo.deviceType;
     }
 
     // Use this for initialization
     void Start()
     {
+        coinsTilemap = GameObject.Find("CoinTilemap").GetComponent<Tilemap>();
         coinsLeft = CountCoins();
         Debug.Log("Counted " + coinsLeft + " coins!");
     }

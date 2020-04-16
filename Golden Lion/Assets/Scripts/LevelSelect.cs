@@ -4,11 +4,9 @@ using UnityEngine.UI;
 
 public class LevelSelect : MonoBehaviour
 {
-    public Text levelNumber;
-
-    public void StartLevel()
+    public void StartLevel(int levelNumber)
     {
-        SceneManager.LoadScene("Level" + levelNumber.text);
+        SceneManager.LoadScene("Level" + levelNumber);
     }
 
     void Update()
